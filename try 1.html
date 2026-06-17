@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Standard Rope &amp; Hardware — Trusted Since 1970</title>
+<meta name="description" content="Trusted Rope, Net & Hardware Solutions Since 1970. Serving industries, farms, warehouses and transport businesses across Central India." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+<style>
+/* ─── Reset & Base ─── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',sans-serif;color:#0a1929;background:#fff;line-height:1.6;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+ul{list-style:none}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+
+/* ─── CSS Variables ─── */
+:root{
+  --sky:#4FC3F7;
+  --deep:#0D47A1;
+  --deep900:#0A1929;
+  --mist:#F1F5F9;
+  --rope:#C9A877;
+  --ink:#0A1929;
+  --white:#ffffff;
+}
+
+/* ─── Utilities ─── */
+.font-display{font-family:'Bebas Neue',sans-serif;letter-spacing:0.02em}
+.font-mono{font-family:'JetBrains Mono',monospace}
+.max-w{max-width:80rem;margin-left:auto;margin-right:auto}
+.px{padding-left:1.5rem;padding-right:1.5rem}
+@media(min-width:1024px){.px{padding-left:2rem;padding-right:2rem}}
+.section-pad{padding-top:clamp(4rem,8vw,7rem);padding-bottom:clamp(4rem,8vw,7rem)}
+.eyebrow{font-family:'JetBrains Mono',monospace;letter-spacing:.28em;text-transform:uppercase;font-size:.72rem;font-weight:600;color:var(--deep)}
+.eyebrow.light{color:var(--sky)}
+.spec-tag{font-family:'JetBrains Mono',monospace;letter-spacing:.12em;font-size:.68rem;font-weight:600;text-transform:uppercase;color:var(--deep);background:rgba(79,195,247,.12);border:1px solid rgba(79,195,247,.35);padding:.3rem .7rem;border-radius:999px;display:inline-block}
+.sky-gradient{background:linear-gradient(135deg,#4FC3F7 0%,#0D47A1 100%)}
+.shadow-premium{box-shadow:0 20px 60px -15px rgba(13,71,161,.25)}
+.shadow-glass{box-shadow:0 8px 32px rgba(13,71,161,.12)}
+.glass-dark{background:rgba(10,25,41,.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.12)}
+.text-center{text-align:center}
+.hidden{display:none!important}
+.page{display:none}
+.page.active{display:block}
+
+/* ─── Selection ─── */
+::selection{background:var(--sky);color:#fff}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--mist)}
+::-webkit-scrollbar-thumb{background:var(--sky);border-radius:8px}
+
+/* ─── Navbar ─── */
+#navbar{position:fixed;top:0;left:0;right:0;z-index:100;transition:all .4s}
+#navbar.scrolled{background:rgba(255,255,255,.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(148,163,184,.3);box-shadow:0 4px 16px rgba(13,71,161,.06)}
+.nav-inner{max-width:80rem;margin:auto;padding:0 1.25rem;display:flex;align-items:center;justify-content:space-between;height:76px}
+@media(min-width:1024px){.nav-inner{padding:0 2rem}}
+.nav-brand{display:flex;align-items:center;gap:.6rem;flex-shrink:0}
+.nav-logo{width:44px;height:44px;border-radius:8px;object-fit:cover;background:#e2e8f0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.nav-logo-svg{width:44px;height:44px}
+.nav-brand-text p:first-child{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.05em;color:var(--deep900);line-height:1.1}
+#navbar:not(.scrolled) .nav-brand-text p:first-child{color:#fff}
+.nav-links{display:none;gap:1.75rem}
+@media(min-width:1024px){.nav-links{display:flex;align-items:center}}
+.nav-link{font-size:.875rem;font-weight:500;letter-spacing:.03em;color:rgba(10,25,41,.65);transition:color .2s;position:relative}
+.nav-link:hover,.nav-link.active{color:var(--deep)}
+.nav-link.active::after{content:'';position:absolute;bottom:-6px;left:0;right:0;height:2px;background:var(--sky);border-radius:2px}
+#navbar:not(.scrolled) .nav-link{color:rgba(255,255,255,.75)}
+#navbar:not(.scrolled) .nav-link:hover,#navbar:not(.scrolled) .nav-link.active{color:#fff}
+.nav-ctas{display:none;gap:.75rem}
+@media(min-width:1024px){.nav-ctas{display:flex;align-items:center}}
+.btn-outline-nav{padding:.625rem 1.25rem;border-radius:999px;font-size:.875rem;font-weight:600;border:1px solid rgba(13,71,161,.2);color:var(--deep);transition:all .2s}
+.btn-outline-nav:hover{background:var(--deep);color:#fff}
+#navbar:not(.scrolled) .btn-outline-nav{border-color:rgba(255,255,255,.35);color:#fff}
+#navbar:not(.scrolled) .btn-outline-nav:hover{background:rgba(255,255,255,.15)}
+.btn-wa-nav{padding:.625rem 1.25rem;border-radius:999px;font-size:.875rem;font-weight:600;color:#fff;background:linear-gradient(135deg,#4FC3F7,#0D47A1);transition:transform .2s;box-shadow:0 4px 14px rgba(13,71,161,.3)}
+.btn-wa-nav:hover{transform:scale(1.03)}
+.hamburger{display:flex;color:var(--deep);padding:.5rem}
+@media(min-width:1024px){.hamburger{display:none}}
+#navbar:not(.scrolled) .hamburger{color:#fff}
+.mobile-menu{display:none;background:rgba(255,255,255,.97);backdrop-filter:blur(20px);border-top:1px solid rgba(148,163,184,.2);padding:1.25rem 1.5rem;flex-direction:column;gap:1rem}
+.mobile-menu.open{display:flex}
+.mobile-menu .nav-link{font-size:1rem;color:rgba(10,25,41,.75)}
+.mobile-ctas{display:flex;gap:.75rem;padding-top:.75rem}
+.mobile-ctas a{flex:1;text-align:center;padding:.75rem;border-radius:999px;font-weight:600;font-size:.875rem}
+.mobile-call{border:1px solid rgba(13,71,161,.2);color:var(--deep)}
+.mobile-wa{color:#fff;background:linear-gradient(135deg,#4FC3F7,#0D47A1)}
+
+/* ─── Buttons ─── */
+.btn-primary{padding:.875rem 1.75rem;border-radius:999px;font-weight:600;color:var(--deep900);background:#fff;transition:background .2s;box-shadow:0 8px 24px rgba(13,71,161,.15)}
+.btn-primary:hover{background:#e0f2fe}
+.btn-sky{padding:.875rem 1.75rem;border-radius:999px;font-weight:600;color:#fff;background:linear-gradient(135deg,#4FC3F7,#0D47A1);box-shadow:0 8px 24px rgba(13,71,161,.25);transition:transform .2s}
+.btn-sky:hover{transform:scale(1.03)}
+.btn-ghost{padding:.875rem 1.75rem;border-radius:999px;font-weight:600;color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.25);display:inline-flex;align-items:center;gap:.5rem;transition:border-color .2s}
+.btn-ghost:hover{border-color:rgba(255,255,255,.6)}
+.btn-group{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1rem}
+
+/* ─── Hero ─── */
+.hero{position:relative;padding-top:11rem;padding-bottom:7rem;overflow:hidden;background:var(--deep900)}
+.hero-glow{position:absolute;inset:0;opacity:.3;background:radial-gradient(circle at 20% 20%,rgba(79,195,247,.5),transparent 55%),radial-gradient(circle at 85% 75%,rgba(79,195,247,.35),transparent 50%);pointer-events:none}
+.hero-coil{position:absolute;right:-8rem;top:50%;transform:translateY(-50%);width:640px;height:640px;opacity:.14;pointer-events:none;display:none}
+@media(min-width:1024px){.hero-coil{display:block}}
+.hero-content{position:relative;text-align:center}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.6rem,8vw,6.2rem);line-height:.95;color:#fff;letter-spacing:.02em}
+.hero h1 span{color:var(--sky)}
+.hero-sub{margin-top:1.5rem;font-size:1.125rem;color:rgba(224,242,254,.9);font-weight:500}
+.hero-desc{margin-top:1rem;max-width:36rem;margin-left:auto;margin-right:auto;color:rgba(255,255,255,.55);line-height:1.7}
+.hero-ctas{margin-top:2.5rem}
+
+/* ─── Rope Divider ─── */
+.rope-thread{width:100%;height:28px;display:block}
+
+/* ─── Trust Counters ─── */
+.trust-section{background:linear-gradient(180deg,#fff,var(--mist))}
+.trust-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem 1.5rem}
+@media(min-width:768px){.trust-grid{grid-template-columns:repeat(4,1fr)}}
+.trust-item{text-align:center}
+.trust-num{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--deep);line-height:1;display:block}
+@media(min-width:768px){.trust-num{font-size:3.75rem}}
+.trust-label{margin-top:.5rem;font-size:.875rem;color:rgba(10,25,41,.55);font-weight:500;letter-spacing:.03em}
+
+/* ─── Category Cards ─── */
+.cat-grid{display:grid;gap:1.75rem}
+@media(min-width:768px){.cat-grid{grid-template-columns:repeat(3,1fr)}}
+.cat-card{position:relative;padding:2rem;border-radius:1.5rem;border:1px solid #f1f5f9;background:var(--mist);transition:all .3s;cursor:pointer;display:block}
+.cat-card:hover{background:#fff;box-shadow:0 20px 60px -15px rgba(13,71,161,.18)}
+.cat-icon{width:3.5rem;height:3.5rem;border-radius:.875rem;background:linear-gradient(135deg,#4FC3F7,#0D47A1);display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;transition:transform .3s}
+.cat-card:hover .cat-icon{transform:scale(1.1)}
+.cat-icon svg{width:26px;height:26px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cat-card h3{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--deep900);margin-bottom:.5rem}
+.cat-card p{font-size:.875rem;color:rgba(10,25,41,.55);line-height:1.65;margin-bottom:1.5rem}
+.cat-link{display:inline-flex;align-items:center;gap:.375rem;font-size:.875rem;font-weight:600;color:var(--deep)}
+.cat-arrow{transition:transform .2s}
+.cat-card:hover .cat-arrow{transform:translateX(4px)}
+
+/* ─── Legacy Strip ─── */
+.legacy-grid{display:grid;gap:3rem;align-items:center}
+@media(min-width:1024px){.legacy-grid{grid-template-columns:1fr 1fr}}
+.legacy-img{border-radius:1.5rem;overflow:hidden;box-shadow:0 20px 60px -15px rgba(13,71,161,.25);aspect-ratio:4/3;position:relative;background:#e2e8f0}
+.legacy-img img{width:100%;height:100%;object-fit:cover}
+
+/* ─── Service Area ─── */
+.service-section{background:var(--deep900);position:relative;overflow:hidden}
+.dot-grid{position:absolute;inset:0;opacity:.07;background-image:radial-gradient(circle,#4FC3F7 1px,transparent 1px);background-size:26px 26px;pointer-events:none}
+.radar{position:relative;aspect-ratio:1;max-width:22rem;margin:0 auto}
+.ring{position:absolute;border-radius:50%;border:1px solid rgba(79,195,247,.25);animation:ripple 2.5s ease-in-out infinite}
+.ring:nth-child(1){inset:0;animation-delay:0s}
+.ring:nth-child(2){inset:14%;animation-delay:.3s}
+.ring:nth-child(3){inset:28%;animation-delay:.6s}
+@keyframes ripple{0%,100%{opacity:.5}50%{opacity:1}}
+.radar-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.5rem}
+.dot-pulse{width:1rem;height:1rem;border-radius:50%;background:var(--sky);box-shadow:0 0 0 8px rgba(79,195,247,.2)}
+.radar-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--sky);letter-spacing:.12em}
+.city-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+@media(min-width:640px){.city-grid{grid-template-columns:repeat(4,1fr)}}
+.city-pill{padding:.875rem 1rem;border-radius:.75rem;display:flex;align-items:center;gap:.5rem;color:rgba(255,255,255,.85);font-size:.875rem}
+.city-pin{width:15px;height:15px;flex-shrink:0;color:var(--sky)}
+.city-pin svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.service-grid{display:grid;gap:3rem;align-items:center}
+@media(min-width:1024px){.service-grid{grid-template-columns:1fr 1.1fr}}
+
+/* ─── About Page ─── */
+.about-hero{position:relative;padding-top:10rem;padding-bottom:5rem;background:var(--deep900);text-align:center;overflow:hidden}
+.about-glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(79,195,247,.45),transparent 60%);opacity:.25;pointer-events:none}
+.timeline{position:relative;padding-left:2rem;border-left:2px solid rgba(79,195,247,.3);display:flex;flex-direction:column;gap:3rem}
+.timeline-item{position:relative}
+.timeline-dot{position:absolute;left:-2.625rem;top:.25rem;width:1.25rem;height:1.25rem;border-radius:50%;background:#fff;border:2px solid var(--sky);box-shadow:0 4px 12px rgba(13,71,161,.1)}
+.tl-year{font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:.22em;color:var(--deep);margin-bottom:.25rem}
+.tl-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--deep900);margin-bottom:.5rem}
+.tl-text{color:rgba(10,25,41,.6);line-height:1.65;font-size:.9375rem}
+
+/* ─── Product Cards ─── */
+.product-grid{display:grid;gap:1.5rem}
+@media(min-width:640px){.product-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.product-grid{grid-template-columns:repeat(4,1fr)}}
+.product-card{background:#fff;border-radius:1.25rem;padding:1.5rem;border:1px solid #f1f5f9;position:relative;overflow:hidden;box-shadow:0 2px 8px rgba(13,71,161,.05);transition:box-shadow .25s,transform .25s}
+.product-card:hover{box-shadow:0 12px 40px rgba(13,71,161,.12);transform:translateY(-3px)}
+.product-card::before{content:'';position:absolute;top:0;left:1.5rem;width:2px;height:1.25rem;background:var(--rope);border-radius:1px}
+.product-spec{margin-bottom:.75rem}
+.product-name{font-family:'Bebas Neue',sans-serif;font-size:1.375rem;color:var(--deep900);margin-bottom:.5rem}
+.product-desc{font-size:.8125rem;color:rgba(10,25,41,.6);line-height:1.6;margin-bottom:1rem}
+.product-uses{display:flex;flex-direction:column;gap:.375rem}
+.product-use{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:rgba(10,25,41,.55)}
+.product-use::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--sky);flex-shrink:0}
+
+/* ─── Industry Cards ─── */
+.industry-grid{display:grid;gap:1.5rem}
+@media(min-width:640px){.industry-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.industry-grid{grid-template-columns:repeat(4,1fr)}}
+.industry-card{padding:1.5rem;border-radius:1rem;background:var(--mist);border:1px solid #e2e8f0}
+.industry-icon{margin-bottom:1rem;color:var(--deep)}
+.industry-icon svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.industry-title{font-family:'Bebas Neue',sans-serif;font-size:1.125rem;color:var(--deep900);margin-bottom:.5rem}
+.industry-text{font-size:.875rem;color:rgba(10,25,41,.6);line-height:1.6}
+
+/* ─── Section Headers ─── */
+.section-header{text-align:center;margin-bottom:3.5rem;max-width:36rem;margin-left:auto;margin-right:auto}
+.section-header h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.875rem,4vw,3rem);color:var(--deep900);margin-top:.75rem;line-height:1.05}
+.section-header.light h2{color:#fff}
+.section-header p{color:rgba(10,25,41,.55);margin-top:1rem;line-height:1.7}
+.section-header.light p{color:rgba(255,255,255,.55)}
+
+/* ─── Reviews ─── */
+.review-grid{display:grid;gap:1.5rem}
+@media(min-width:640px){.review-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.review-grid{grid-template-columns:repeat(3,1fr)}}
+.review-card{background:#fff;border-radius:1.25rem;padding:1.5rem;border:1px solid #f1f5f9;box-shadow:0 4px 16px rgba(13,71,161,.06)}
+.stars{display:flex;gap:.2rem;margin-bottom:.75rem}
+.star{width:15px;height:15px;fill:var(--sky)}
+.review-text{font-size:.875rem;color:rgba(10,25,41,.7);line-height:1.7;margin-bottom:1.25rem;font-style:italic}
+.reviewer{display:flex;align-items:center;gap:.75rem}
+.reviewer-avatar{width:2.25rem;height:2.25rem;border-radius:50%;background:linear-gradient(135deg,#4FC3F7,#0D47A1);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.875rem;font-weight:600;flex-shrink:0}
+.reviewer-name{font-size:.875rem;font-weight:600;color:var(--deep900)}
+.reviewer-role{font-size:.75rem;color:rgba(10,25,41,.5)}
+
+/* ─── Contact ─── */
+.contact-grid{display:grid;gap:2.5rem}
+@media(min-width:1024px){.contact-grid{grid-template-columns:.85fr 1.15fr}}
+.contact-info{display:flex;flex-direction:column;gap:1.25rem}
+.info-card{background:var(--mist);border-radius:1rem;padding:1.5rem;border:1px solid #e2e8f0;display:flex;gap:.75rem;align-items:flex-start}
+.info-icon{color:var(--deep);flex-shrink:0;margin-top:.125rem}
+.info-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.info-label{font-weight:600;font-size:.875rem;color:var(--deep900);margin-bottom:.25rem}
+.info-val{font-size:.875rem;color:rgba(10,25,41,.6);line-height:1.6}
+.info-val a:hover{color:var(--deep)}
+.map-embed{border-radius:1rem;overflow:hidden;border:1px solid #e2e8f0;height:14rem}
+.map-embed iframe{width:100%;height:100%;border:0}
+.contact-form-wrap{background:linear-gradient(180deg,#fff,var(--mist));border-radius:1.5rem;padding:2rem;border:1px solid #e2e8f0;box-shadow:0 8px 32px rgba(13,71,161,.08)}
+@media(min-width:1024px){.contact-form-wrap{padding:2.5rem}}
+.contact-form-wrap h2{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--deep900);margin-bottom:1.5rem}
+.form-group{margin-bottom:1.25rem}
+.form-group label{display:block;font-size:.875rem;font-weight:600;color:var(--deep900);margin-bottom:.5rem}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:.75rem 1rem;border:1px solid #e2e8f0;border-radius:.75rem;font-family:inherit;font-size:.9375rem;color:var(--ink);background:#fff;transition:border-color .2s,box-shadow .2s;outline:none}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--sky);box-shadow:0 0 0 3px rgba(79,195,247,.15)}
+.form-group textarea{min-height:7rem;resize:vertical}
+.form-row{display:grid;gap:1rem}
+@media(min-width:640px){.form-row{grid-template-columns:1fr 1fr}}
+.btn-submit{width:100%;padding:.875rem;border-radius:999px;font-weight:600;font-size:1rem;color:#fff;background:linear-gradient(135deg,#4FC3F7,#0D47A1);transition:opacity .2s,transform .2s;box-shadow:0 8px 24px rgba(13,71,161,.25);cursor:pointer;border:none;font-family:inherit}
+.btn-submit:hover{transform:translateY(-1px)}
+.form-success{display:none;background:#f0fdf4;border:1px solid #86efac;border-radius:.75rem;padding:1rem;text-align:center;color:#166534;font-weight:500}
+
+/* ─── Gallery ─── */
+.gallery-note{text-align:center;padding:3rem 1.5rem;color:rgba(10,25,41,.5);font-size:.9375rem}
+.gallery-grid{display:grid;gap:1rem;grid-template-columns:repeat(2,1fr)}
+@media(min-width:768px){.gallery-grid{grid-template-columns:repeat(3,1fr)}}
+.gallery-item{border-radius:1rem;overflow:hidden;aspect-ratio:1;background:#e2e8f0;position:relative}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.gallery-item:hover img{transform:scale(1.05)}
+.gallery-placeholder{background:linear-gradient(135deg,#e2e8f0,#cbd5e1);display:flex;align-items:center;justify-content:center;height:100%;color:rgba(10,25,41,.3);font-size:.75rem;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+
+/* ─── CTA Section ─── */
+.cta-section{background:var(--deep900);text-align:center}
+.cta-section h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.875rem,4vw,3rem);color:#fff;margin-bottom:1rem}
+.cta-section p{color:rgba(255,255,255,.55);margin-bottom:2rem;max-width:32rem;margin-left:auto;margin-right:auto}
+
+/* ─── Footer ─── */
+footer{background:var(--deep900);color:#fff;padding-top:1rem}
+.footer-grid{display:grid;gap:3rem;padding:3.5rem 0}
+@media(min-width:768px){.footer-grid{grid-template-columns:repeat(4,1fr)}}
+.footer-brand{display:flex;align-items:center;gap:.6rem;margin-bottom:1rem}
+.footer-brand p{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.04em}
+.footer-tagline{color:rgba(255,255,255,.55);font-size:.875rem;line-height:1.6}
+.footer-col-title{font-family:'JetBrains Mono',monospace;letter-spacing:.28em;text-transform:uppercase;font-size:.7rem;font-weight:600;color:var(--sky);margin-bottom:1rem}
+.footer-nav{display:flex;flex-direction:column;gap:.625rem}
+.footer-nav a{font-size:.875rem;color:rgba(255,255,255,.65);transition:color .2s}
+.footer-nav a:hover{color:var(--sky)}
+.footer-contact{display:flex;flex-direction:column;gap:.75rem}
+.footer-contact-row{display:flex;gap:.625rem;align-items:flex-start;font-size:.875rem;color:rgba(255,255,255,.65)}
+.footer-contact-row svg{width:17px;height:17px;stroke:var(--sky);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;margin-top:.125rem}
+.footer-contact-row a:hover{color:var(--sky)}
+.footer-year{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;line-height:1}
+.footer-year-sub{color:rgba(255,255,255,.45);font-size:.8125rem;margin-top:.5rem;line-height:1.5}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding:1.25rem 0;text-align:center;font-size:.75rem;color:rgba(255,255,255,.35)}
+
+/* ─── Page hero variants ─── */
+.page-hero{position:relative;padding-top:10rem;padding-bottom:5rem;background:var(--deep900);overflow:hidden}
+.page-hero-glow-right{position:absolute;inset:0;background:radial-gradient(circle at 80% 20%,rgba(79,195,247,.5),transparent 55%);opacity:.25;pointer-events:none}
+.page-hero-glow-center{position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(79,195,247,.45),transparent 60%);opacity:.25;pointer-events:none}
+.page-hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.25rem,6vw,4rem);color:#fff;line-height:.98;max-width:36rem}
+.page-hero.centered{text-align:center}
+.page-hero.centered h1{max-width:100%;margin:auto}
+.page-hero p{color:rgba(255,255,255,.55);margin-top:1.25rem;max-width:32rem;line-height:1.7}
+.page-hero.centered p{margin-left:auto;margin-right:auto}
+
+/* ─── Fade-in animation ─── */
+.fade-in{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* ─── About two-col ─── */
+.two-col{display:grid;gap:3rem;align-items:center}
+@media(min-width:1024px){.two-col{grid-template-columns:1fr 1fr}}
+.img-block{border-radius:1.5rem;overflow:hidden;aspect-ratio:4/3;position:relative;background:#e2e8f0;box-shadow:0 20px 60px -15px rgba(13,71,161,.25)}
+.img-block img{width:100%;height:100%;object-fit:cover}
+
+/* ─── Divider section ─── */
+.divider-section{background:#fff;padding:0}
+
+/* ─── Stars section reviews ─── */
+.rating-row{display:flex;align-items:center;justify-content:center;gap:.25rem;margin-top:1.25rem}
+
+/* ─── Net & Hardware page net grid ─── */
+.product-grid-3{display:grid;gap:1.5rem}
+@media(min-width:640px){.product-grid-3{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.product-grid-3{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ NAVBAR ═══════════════ -->
+<header id="navbar">
+  <div class="nav-inner">
+    <a class="nav-brand" href="#home" onclick="navigate('home')">
+      <div class="nav-logo">
+        <svg class="nav-logo-svg" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="44" height="44" rx="8" fill="#0D47A1"/>
+          <g fill="none" stroke="#4FC3F7" stroke-width="2">
+            <circle cx="22" cy="22" r="6"/>
+            <circle cx="22" cy="22" r="10"/>
+            <circle cx="22" cy="22" r="14"/>
+          </g>
+          <circle cx="22" cy="22" r="3" fill="#4FC3F7"/>
+        </svg>
+      </div>
+      <div class="nav-brand-text">
+        <p>STANDARD ROPE</p>
+        <span class="spec-tag" style="font-size:.58rem;padding:.2rem .5rem">EST. 1970</span>
+      </div>
+    </a>
+
+    <nav class="nav-links">
+      <a class="nav-link active" href="#home" onclick="navigate('home')">Home</a>
+      <a class="nav-link" href="#about" onclick="navigate('about')">About</a>
+      <a class="nav-link" href="#rope" onclick="navigate('rope')">Rope Solutions</a>
+      <a class="nav-link" href="#nets" onclick="navigate('nets')">Net Solutions</a>
+      <a class="nav-link" href="#hardware" onclick="navigate('hardware')">Hardware Solutions</a>
+      <a class="nav-link" href="#gallery" onclick="navigate('gallery')">Gallery</a>
+      <a class="nav-link" href="#reviews" onclick="navigate('reviews')">Reviews</a>
+      <a class="nav-link" href="#contact" onclick="navigate('contact')">Contact</a>
+    </nav>
+
+    <div class="nav-ctas">
+      <a class="btn-outline-nav" href="#contact" onclick="navigate('contact')">Request Quote</a>
+      <a class="btn-wa-nav" href="https://wa.me/919977776724" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+
+    <button class="hamburger" id="ham-btn" aria-label="Toggle menu" onclick="toggleMenu()">
+      <svg id="ham-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg id="close-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a class="nav-link" href="#home" onclick="navigate('home');toggleMenu()">Home</a>
+    <a class="nav-link" href="#about" onclick="navigate('about');toggleMenu()">About</a>
+    <a class="nav-link" href="#rope" onclick="navigate('rope');toggleMenu()">Rope Solutions</a>
+    <a class="nav-link" href="#nets" onclick="navigate('nets');toggleMenu()">Net Solutions</a>
+    <a class="nav-link" href="#hardware" onclick="navigate('hardware');toggleMenu()">Hardware Solutions</a>
+    <a class="nav-link" href="#gallery" onclick="navigate('gallery');toggleMenu()">Gallery</a>
+    <a class="nav-link" href="#reviews" onclick="navigate('reviews');toggleMenu()">Reviews</a>
+    <a class="nav-link" href="#contact" onclick="navigate('contact');toggleMenu()">Contact</a>
+    <div class="mobile-ctas">
+      <a class="mobile-call" href="tel:+919977776724">📞 Call</a>
+      <a class="mobile-wa" href="https://wa.me/919977776724" target="_blank">WhatsApp</a>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════ PAGE: HOME ═══════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <svg class="hero-coil" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+      <g fill="none" stroke="#4FC3F7" stroke-width="6">
+        <circle cx="300" cy="300" r="40"/>
+        <circle cx="300" cy="300" r="68"/>
+        <circle cx="300" cy="300" r="96"/>
+        <circle cx="300" cy="300" r="124"/>
+        <circle cx="300" cy="300" r="152"/>
+        <circle cx="300" cy="300" r="180"/>
+        <circle cx="300" cy="300" r="208"/>
+        <circle cx="300" cy="300" r="236"/>
+        <circle cx="300" cy="300" r="264"/>
+      </g>
+    </svg>
+    <div class="max-w px hero-content">
+      <p class="eyebrow light" style="margin-bottom:1.25rem">Est. 1970 · Dewas, Madhya Pradesh</p>
+      <h1>STANDARD ROPE<br><span>&amp; HARDWARE</span></h1>
+      <p class="hero-sub">Trusted Rope, Net &amp; Hardware Solutions Since 1970</p>
+      <p class="hero-desc">Serving industries, farms, warehouses, transport businesses and commercial clients across Central India with reliable rope, net and hardware solutions.</p>
+      <div class="hero-ctas btn-group">
+        <a class="btn-primary" href="#contact" onclick="navigate('contact')">Request Quote</a>
+        <a class="btn-sky" href="https://wa.me/919977776724" target="_blank" rel="noopener">WhatsApp Now</a>
+        <a class="btn-ghost" href="#rope" onclick="navigate('rope')">Explore Products <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROPE DIVIDER -->
+  <div class="rope-thread"><svg viewBox="0 0 1200 28" preserveAspectRatio="none" width="100%" height="100%"><defs><linearGradient id="rf1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#0D47A1" stop-opacity="0"/><stop offset="15%" stop-color="#0D47A1" stop-opacity=".35"/><stop offset="85%" stop-color="#0D47A1" stop-opacity=".35"/><stop offset="100%" stop-color="#0D47A1" stop-opacity="0"/></linearGradient></defs><path d="M0,14 Q30,4 60,14 T120,14 T180,14 T240,14 T300,14 T360,14 T420,14 T480,14 T540,14 T600,14 T660,14 T720,14 T780,14 T840,14 T900,14 T960,14 T1020,14 T1080,14 T1140,14 T1200,14" fill="none" stroke="url(#rf1)" stroke-width="2"/><path d="M0,16 Q30,26 60,16 T120,16 T180,16 T240,16 T300,16 T360,16 T420,16 T480,16 T540,16 T600,16 T660,16 T720,16 T780,16 T840,16 T900,16 T960,16 T1020,16 T1080,16 T1140,16 T1200,16" fill="none" stroke="url(#rf1)" stroke-width="1.4" opacity=".6"/></svg></div>
+
+  <!-- TRUST COUNTERS -->
+  <section class="section-pad trust-section">
+    <div class="max-w px">
+      <div class="trust-grid">
+        <div class="trust-item">
+          <span class="trust-num" data-count="50" data-suffix="+">0+</span>
+          <p class="trust-label">Years in Operation</p>
+        </div>
+        <div class="trust-item">
+          <span class="trust-num" data-count="12000" data-suffix="+">0+</span>
+          <p class="trust-label">Customers Served</p>
+        </div>
+        <div class="trust-item">
+          <span class="trust-num" data-count="8" data-suffix="">0</span>
+          <p class="trust-label">States Reached</p>
+        </div>
+        <div class="trust-item">
+          <span class="trust-num" data-count="500" data-suffix=" km">0 km</span>
+          <p class="trust-label">Service Radius</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORY TEASERS -->
+  <section class="section-pad" style="background:#fff">
+    <div class="max-w px">
+      <div class="section-header">
+        <p class="eyebrow">What We Supply</p>
+        <h2>Three Pillars of Industrial Supply</h2>
+      </div>
+      <div class="cat-grid">
+        <a class="cat-card" href="#rope" onclick="navigate('rope')">
+          <div class="cat-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          </div>
+          <h3>Rope Solutions</h3>
+          <p>Nylon, industrial, agricultural, transport, construction and heavy-duty rope.</p>
+          <span class="cat-link">View Range <svg class="cat-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </a>
+        <a class="cat-card" href="#nets" onclick="navigate('nets')">
+          <div class="cat-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Net Solutions</h3>
+          <p>Shade, sun-protection, farming, garden, bird-protection and safety nets.</p>
+          <span class="cat-link">View Range <svg class="cat-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </a>
+        <a class="cat-card" href="#hardware" onclick="navigate('hardware')">
+          <div class="cat-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 19.07a10 10 0 0 1 0-14.14M1 12a11 11 0 0 0 11 11"/><path d="M23 12a11 11 0 0 0-11-11"/></svg>
+          </div>
+          <h3>Hardware Solutions</h3>
+          <p>Industrial, commercial and general hardware supply for every requirement.</p>
+          <span class="cat-link">View Range <svg class="cat-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- KNOTTED ROPE DIVIDER -->
+  <div class="rope-thread" style="background:#fff"><svg viewBox="0 0 1200 28" preserveAspectRatio="none" width="100%" height="100%"><defs><linearGradient id="rf2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#0D47A1" stop-opacity="0"/><stop offset="15%" stop-color="#0D47A1" stop-opacity=".35"/><stop offset="85%" stop-color="#0D47A1" stop-opacity=".35"/><stop offset="100%" stop-color="#0D47A1" stop-opacity="0"/></linearGradient></defs><path d="M0,14 Q30,4 60,14 T120,14 T180,14 T240,14 T300,14 T360,14 T420,14 T480,14 T540,14 T600,14 T660,14 T720,14 T780,14 T840,14 T900,14 T960,14 T1020,14 T1080,14 T1140,14 T1200,14" fill="none" stroke="url(#rf2)" stroke-width="2"/><path d="M0,16 Q30,26 60,16 T120,16 T180,16 T240,16 T300,16 T360,16 T420,16 T480,16 T540,16 T600,16 T660,16 T720,16 T780,16 T840,16 T900,16 T960,16 T1020,16 T1080,16 T1140,16 T1200,16" fill="none" stroke="url(#rf2)" stroke-width="1.4" opacity=".6"/><g transform="translate(600,14)"><circle r="6.5" fill="#F1F5F9" stroke="#C9A877" stroke-width="1.5"/><path d="M-4,-3 Q0,-7 4,-3 Q7,0 4,3 Q0,7 -4,3 Q-7,0 -4,-3" fill="none" stroke="#0D47A1" stroke-width="1.1"/></g></svg></div>
+
+  <!-- LEGACY STRIP -->
+  <section class="section-pad" style="background:#fff">
+    <div class="max-w px">
+      <div class="legacy-grid">
+        <div>
+          <p class="eyebrow">Our Story</p>
+          <h2 class="font-display" style="font-size:clamp(1.875rem,4vw,2.75rem);color:var(--deep900);margin-top:.75rem;margin-bottom:1.25rem;line-height:1.05">A Legacy of Trust Since 1970</h2>
+          <p style="color:rgba(10,25,41,.65);line-height:1.7;margin-bottom:1.5rem">What began as a single rope counter in Dewas' Raja Ram Patel Market has grown into a trusted regional supplier to industries, farms, transporters and construction companies — still run with the same hands-on attention to quality, three generations later.</p>
+          <a class="cat-link" href="#about" onclick="navigate('about')" style="font-size:1rem">Read Our Full Story <svg class="cat-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+        <div class="legacy-img">
+          <div style="width:100%;height:100%;background:linear-gradient(135deg,#0D47A1 0%,#0A1929 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;padding:2rem;text-align:center">
+            <svg width="64" height="64" viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:.7"><g stroke="#4FC3F7" stroke-width="10" fill="none"><circle cx="300" cy="300" r="60"/><circle cx="300" cy="300" r="100"/><circle cx="300" cy="300" r="140"/><circle cx="300" cy="300" r="180"/><circle cx="300" cy="300" r="220"/></g><circle cx="300" cy="300" r="30" fill="#4FC3F7"/></svg>
+            <p style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:#fff;letter-spacing:.05em">STANDARD ROPE &amp; HARDWARE</p>
+            <p style="font-family:'JetBrains Mono',monospace;font-size:.75rem;color:rgba(79,195,247,.8);letter-spacing:.2em">1 RAJA RAM PATEL MARKET · DEWAS</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICE AREA -->
+  <section class="section-pad service-section">
+    <div class="dot-grid"></div>
+    <div class="max-w px" style="position:relative">
+      <div class="section-header light">
+        <p class="eyebrow light">Coverage</p>
+        <h2>Serving Customers Across Central India</h2>
+        <p>A 500 km supply radius centred on Dewas, built over five decades of consistent, reliable delivery.</p>
+      </div>
+      <div class="service-grid">
+        <div class="radar">
+          <div class="ring"></div>
+          <div class="ring"></div>
+          <div class="ring"></div>
+          <div class="radar-center">
+            <div class="dot-pulse"></div>
+            <span class="radar-label">DEWAS HQ</span>
+          </div>
+        </div>
+        <div class="city-grid">
+          <div class="city-pill glass-dark"><span class="city-pin"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Indore</div>
+          <div class="city-pill glass-dark"><span class="city-pin"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Ujjain</div>
+          <div class="city-pill glass-dark"><span class="city-pin"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Bhopal</div>
+          <div class="city-pill glass-dark"><span class="city-pin"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Ratlam</div>
+          <div class="city-pill glass-dark"><span class="city-pin"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Neemuch</div>
+          <div class="city-pill glass-dark"><span class="city-pin"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Mandsaur</div>
+          <div class="city-pill glass-dark"><span class="city-pin"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Kota</div>
+          <div class="city-pill glass-dark"><span class="city-pin"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Pithampur</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- end page-home -->
+
+
+<!-- ═══════════════ PAGE: ABOUT ═══════════════ -->
+<div class="page" id="page-about">
+  <section class="page-hero centered">
+    <div class="page-hero-glow-center"></div>
+    <div class="max-w px" style="position:relative">
+      <p class="eyebrow light" style="margin-bottom:1rem">About Standard Rope &amp; Hardware</p>
+      <h1>A Legacy of Trust Since 1970</h1>
+      <p style="max-width:36rem;margin-left:auto;margin-right:auto">Three generations of one Dewas family, dedicated to a single trade: supplying rope, net and hardware that businesses can rely on.</p>
+    </div>
+  </section>
+
+  <section class="section-pad" style="background:#fff">
+    <div class="max-w px">
+      <div class="two-col" style="margin-bottom:5rem">
+        <div class="img-block" style="order:2">
+          <div style="width:100%;height:100%;background:linear-gradient(135deg,#0D47A1,#0A1929);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1.5rem;padding:2.5rem;text-align:center">
+            <svg width="80" height="80" viewBox="0 0 600 600" fill="none"><g stroke="#4FC3F7" stroke-width="10" fill="none"><circle cx="300" cy="300" r="60"/><circle cx="300" cy="300" r="110"/><circle cx="300" cy="300" r="160"/><circle cx="300" cy="300" r="210"/></g><circle cx="300" cy="300" r="35" fill="#4FC3F7"/></svg>
+            <p style="font-family:'JetBrains Mono',monospace;font-size:.8rem;color:rgba(79,195,247,.9);letter-spacing:.18em;text-transform:uppercase">Raja Ram Patel Market · Dewas</p>
+          </div>
+        </div>
+        <div style="order:1">
+          <p class="eyebrow" style="margin-bottom:.75rem">Where It Began</p>
+          <h2 class="font-display" style="font-size:clamp(1.75rem,4vw,2.5rem);color:var(--deep900);margin-bottom:1.25rem;line-height:1.05">Raja Ram Patel Market, Dewas</h2>
+          <p style="color:rgba(10,25,41,.65);line-height:1.7;margin-bottom:1rem">Aziz Ur Rahman Khan carries forward a business his family built counter by counter — from hand-laid cotton rope sold to local farmers, to becoming a recognised supplier for industries, transport companies and construction firms across Central India.</p>
+          <p style="color:rgba(10,25,41,.65);line-height:1.7">The address has stayed the same for over five decades. What's changed is the scale of who relies on it.</p>
+        </div>
+      </div>
+
+      <!-- rope divider -->
+      <div class="rope-thread" style="max-width:56rem;margin:0 auto 4rem"><svg viewBox="0 0 1200 28" preserveAspectRatio="none" width="100%" height="100%"><defs><linearGradient id="rf3" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#0D47A1" stop-opacity="0"/><stop offset="15%" stop-color="#0D47A1" stop-opacity=".35"/><stop offset="85%" stop-color="#0D47A1" stop-opacity=".35"/><stop offset="100%" stop-color="#0D47A1" stop-opacity="0"/></linearGradient></defs><path d="M0,14 Q30,4 60,14 T120,14 T180,14 T240,14 T300,14 T360,14 T420,14 T480,14 T540,14 T600,14 T660,14 T720,14 T780,14 T840,14 T900,14 T960,14 T1020,14 T1080,14 T1140,14 T1200,14" fill="none" stroke="url(#rf3)" stroke-width="2"/><path d="M0,16 Q30,26 60,16 T120,16 T180,16 T240,16 T300,16 T360,16 T420,16 T480,16 T540,16 T600,16 T660,16 T720,16 T780,16 T840,16 T900,16 T960,16 T1020,16 T1080,16 T1140,16 T1200,16" fill="none" stroke="url(#rf3)" stroke-width="1.4" opacity=".6"/><g transform="translate(600,14)"><circle r="6.5" fill="#F1F5F9" stroke="#C9A877" stroke-width="1.5"/><path d="M-4,-3 Q0,-7 4,-3 Q7,0 4,3 Q0,7 -4,3 Q-7,0 -4,-3" fill="none" stroke="#0D47A1" stroke-width="1.1"/></g></svg></div>
+
+      <!-- TIMELINE -->
+      <div style="max-width:42rem;margin:0 auto">
+        <p class="eyebrow text-center" style="margin-bottom:.75rem">The Journey</p>
+        <h2 class="font-display text-center" style="font-size:clamp(1.875rem,4vw,2.75rem);color:var(--deep900);margin-bottom:4rem;line-height:1.05">Five Decades, One Address</h2>
+        <div class="timeline">
+          <div class="timeline-item"><div class="timeline-dot"></div><p class="tl-year">1970</p><h3 class="tl-title">The first coil is sold</h3><p class="tl-text">Aziz Ur Rahman Khan's father opens a small rope counter in Dewas' Raja Ram Patel Market, supplying farmers and cart operators with hand-laid cotton and jute rope.</p></div>
+          <div class="timeline-item"><div class="timeline-dot"></div><p class="tl-year">1985</p><h3 class="tl-title">Industrial demand arrives</h3><p class="tl-text">As Dewas' textile and engineering units grow, the shop expands into synthetic and nylon rope for transport binding and machine lashing.</p></div>
+          <div class="timeline-item"><div class="timeline-dot"></div><p class="tl-year">1998</p><h3 class="tl-title">Net solutions added</h3><p class="tl-text">Shade nets and agricultural netting are introduced to serve the region's expanding farming community through harsh summers.</p></div>
+          <div class="timeline-item"><div class="timeline-dot"></div><p class="tl-year">2010</p><h3 class="tl-title">Regional supplier status</h3><p class="tl-text">Standard Rope &amp; Hardware becomes a recognised bulk supplier to construction and warehousing companies across Malwa.</p></div>
+          <div class="timeline-item"><div class="timeline-dot"></div><p class="tl-year">Today</p><h3 class="tl-title">Three generations of trust</h3><p class="tl-text">Now run with the same hands-on attention to quality, serving customers within a 500 km radius of Dewas.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- end page-about -->
+
+
+<!-- ═══════════════ PAGE: ROPE SOLUTIONS ═══════════════ -->
+<div class="page" id="page-rope">
+  <section class="page-hero">
+    <div class="page-hero-glow-right"></div>
+    <div class="max-w px" style="position:relative">
+      <p class="eyebrow light" style="margin-bottom:1rem">Our Core Trade</p>
+      <h1>Rope Solutions for Every Industrial Need</h1>
+      <p>Eight rope categories, stocked and supplied in bulk — from farmland fencing to crane-rated heavy lifting. Every coil specced for the load it's built to carry.</p>
+    </div>
+  </section>
+
+  <section class="section-pad" style="background:#fff">
+    <div class="max-w px">
+      <div class="section-header"><p class="eyebrow">Built For</p><h2>Who Relies on Our Rope</h2></div>
+      <div class="industry-grid">
+        <div class="industry-card"><div class="industry-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><h3 class="industry-title">Industries &amp; Factories</h3><p class="industry-text">Hoisting, machine tie-downs, and material handling rope built for daily heavy use.</p></div>
+        <div class="industry-card"><div class="industry-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><h3 class="industry-title">Agricultural Businesses</h3><p class="industry-text">Fencing, baling and tethering rope that holds up through every season.</p></div>
+        <div class="industry-card"><div class="industry-icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><h3 class="industry-title">Transport Companies</h3><p class="industry-text">High-tensile load-securing rope trusted on long-haul routes across the region.</p></div>
+        <div class="industry-card"><div class="industry-icon"><svg viewBox="0 0 24 24"><path d="M2 20h20M4 20V10M20 20V10M12 20V4M8 10V6M16 10V6M8 20v-4M16 20v-4"/></svg></div><h3 class="industry-title">Construction Companies</h3><p class="industry-text">Scaffolding ties, hoisting lines and site-safety rope for active job sites.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="rope-thread"><svg viewBox="0 0 1200 28" preserveAspectRatio="none" width="100%" height="100%"><defs><linearGradient id="rf4" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#0D47A1" stop-opacity="0"/><stop offset="15%" stop-color="#0D47A1" stop-opacity=".35"/><stop offset="85%" stop-color="#0D47A1" stop-opacity=".35"/><stop offset="100%" stop-color="#0D47A1" stop-opacity="0"/></linearGradient></defs><path d="M0,14 Q30,4 60,14 T120,14 T180,14 T240,14 T300,14 T360,14 T420,14 T480,14 T540,14 T600,14 T660,14 T720,14 T780,14 T840,14 T900,14 T960,14 T1020,14 T1080,14 T1140,14 T1200,14" fill="none" stroke="url(#rf4)" stroke-width="2"/></svg></div>
+
+  <section class="section-pad" style="background:var(--mist)">
+    <div class="max-w px">
+      <div class="section-header"><p class="eyebrow">The Range</p><h2>Eight Rope Categories, Fully Stocked</h2></div>
+      <div class="product-grid">
+        <div class="product-card"><div class="product-spec"><span class="spec-tag">DIA 6–32 MM</span></div><h3 class="product-name">Nylon Rope</h3><p class="product-desc">High-tenacity nylon rope with strong abrasion resistance, used wherever a clean, weatherproof hold is required.</p><div class="product-uses"><div class="product-use">Transport lashing</div><div class="product-use">Marine &amp; well use</div><div class="product-use">General industrial rigging</div></div></div>
+        <div class="product-card"><div class="product-spec"><span class="spec-tag">Heavy Duty</span></div><h3 class="product-name">Industrial Rope</h3><p class="product-desc">Built for factories and warehouses — engineered for repeated load cycles on machinery, hoists and material handling.</p><div class="product-uses"><div class="product-use">Hoisting</div><div class="product-use">Machine tie-downs</div><div class="product-use">Warehouse handling</div></div></div>
+        <div class="product-card"><div class="product-spec"><span class="spec-tag">Farm Grade</span></div><h3 class="product-name">Agricultural Rope</h3><p class="product-desc">Durable, weather-resistant rope for farms — fencing, baling, and securing equipment through every season.</p><div class="product-uses"><div class="product-use">Fencing</div><div class="product-use">Baling &amp; bundling</div><div class="product-use">Tool &amp; gate securing</div></div></div>
+        <div class="product-card"><div class="product-spec"><span class="spec-tag">Soft-Hand</span></div><h3 class="product-name">Animal Rope</h3><p class="product-desc">Soft-finish cotton and synthetic blends designed for safe, comfortable handling and tethering of livestock.</p><div class="product-uses"><div class="product-use">Tethering</div><div class="product-use">Leading &amp; handling</div><div class="product-use">Cattle yard fittings</div></div></div>
+        <div class="product-card"><div class="product-spec"><span class="spec-tag">High Tensile</span></div><h3 class="product-name">Transport Rope</h3><p class="product-desc">High-tensile rope built specifically for securing loads on trucks and trailers across long-haul routes.</p><div class="product-uses"><div class="product-use">Load securing</div><div class="product-use">Tarpaulin tie-down</div><div class="product-use">Goods carrier binding</div></div></div>
+        <div class="product-card"><div class="product-spec"><span class="spec-tag">Site Ready</span></div><h3 class="product-name">Construction Rope</h3><p class="product-desc">Site-grade rope for scaffolding, hoisting materials, and general safety use on active construction sites.</p><div class="product-uses"><div class="product-use">Scaffolding ties</div><div class="product-use">Material hoisting</div><div class="product-use">Site safety lines</div></div></div>
+        <div class="product-card"><div class="product-spec"><span class="spec-tag">Max Load</span></div><h3 class="product-name">Heavy Duty Rope</h3><p class="product-desc">Our highest breaking-strength rope, supplied to clients who cannot compromise on load capacity.</p><div class="product-uses"><div class="product-use">Crane &amp; winch use</div><div class="product-use">Heavy load anchoring</div><div class="product-use">Industrial pulley systems</div></div></div>
+        <div class="product-card"><div class="product-spec"><span class="spec-tag">All-Round</span></div><h3 class="product-name">Multipurpose Rope</h3><p class="product-desc">A flexible, reliable everyday rope stocked in bulk for general commercial and household requirements.</p><div class="product-uses"><div class="product-use">General binding</div><div class="product-use">Storage &amp; packing</div><div class="product-use">Everyday utility</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad cta-section">
+    <div class="max-w px">
+      <h2>Need a Specific Grade or Bulk Quantity?</h2>
+      <p>Tell us your application and load requirement — we'll recommend the right rope and send a quote.</p>
+      <div class="btn-group">
+        <a class="btn-sky" href="https://wa.me/919977776724" target="_blank" rel="noopener">WhatsApp Us</a>
+        <a class="btn-ghost" href="#contact" onclick="navigate('contact')">Request Quote</a>
+      </div>
+    </div>
+  </section>
+</div><!-- end page-rope -->
+
+
+<!-- ═══════════════ PAGE: NET SOLUTIONS ═══════════════ -->
+<div class="page" id="page-nets">
+  <section class="page-hero">
+    <div class="page-hero-glow-right"></div>
+    <div class="max-w px" style="position:relative">
+      <p class="eyebrow light" style="margin-bottom:1rem">Nets &amp; Covers</p>
+      <h1>Net Solutions for Every Climate &amp; Crop</h1>
+      <p>Six net categories for shade, sun protection, farming, gardens, bird control and construction safety — UV-rated and season-ready.</p>
+    </div>
+  </section>
+
+  <section class="section-pad" style="background:var(--mist)">
+    <div class="max-w px">
+      <div class="section-header"><p class="eyebrow">The Range</p><h2>Six Net Categories, Always in Stock</h2></div>
+      <div class="product-grid-3">
+        <div class="product-card"><div class="product-spec"><span class="spec-tag">35–75% Shade</span></div><h3 class="product-name">Shade Nets</h3><p class="product-desc">UV-stabilised shade netting in multiple densities, supplied for nurseries, greenhouses and open storage yards.</p><div class="product-uses"><div class="product-use">Nurseries</div><div class="product-use">Greenhouses</div><div class="product-use">Open storage yards</div></div></div>
+        <div class="product-card"><div class="product-spec"><span class="spec-tag">Heat Reduction</span></div><h3 class="product-name">Sun Protection Nets</h3><p class="product-desc">Heavy-density netting engineered to cut peak summer heat for livestock shelters and outdoor workspaces.</p><div class="product-uses"><div class="product-use">Livestock shelters</div><div class="product-use">Parking &amp; yards</div><div class="product-use">Outdoor workstations</div></div></div>
+        <div class="product-card"><div class="product-spec"><span class="spec-tag">Crop Grade</span></div><h3 class="product-name">Farming Nets</h3><p class="product-desc">Purpose-built netting for crop protection, climbing support, and seasonal field coverage.</p><div class="product-uses"><div class="product-use">Crop protection</div><div class="product-use">Climbing support</div><div class="product-use">Field coverage</div></div></div>
+        <div class="product-card"><div class="product-spec"><span class="spec-tag">Lightweight</span></div><h3 class="product-name">Garden Nets</h3><p class="product-desc">Lightweight, easy-to-install netting for home gardens, terraces and small commercial plots.</p><div class="product-uses"><div class="product-use">Home gardens</div><div class="product-use">Terrace plots</div><div class="product-use">Plant support</div></div></div>
+        <div class="product-card"><div class="product-spec"><span class="spec-tag">Fine Mesh</span></div><h3 class="product-name">Bird Protection Nets</h3><p class="product-desc">Fine-mesh, low-visibility netting that keeps birds off crops, balconies and warehouse openings without harm.</p><div class="product-uses"><div class="product-use">Orchard protection</div><div class="product-use">Balconies</div><div class="product-use">Warehouse openings</div></div></div>
+        <div class="product-card"><div class="product-spec"><span class="spec-tag">Fall Rated</span></div><h3 class="product-name">Safety Nets</h3><p class="product-desc">Heavy-grade safety netting for construction sites and elevated work areas, supplied to commercial contractors.</p><div class="product-uses"><div class="product-use">Construction sites</div><div class="product-use">Elevated platforms</div><div class="product-use">Industrial safety zones</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad cta-section">
+    <div class="max-w px">
+      <h2>Need Custom Dimensions or Bulk Supply?</h2>
+      <p>Specify your shade percentage, mesh size, or area to cover — we'll quote accordingly.</p>
+      <div class="btn-group">
+        <a class="btn-sky" href="https://wa.me/919977776724" target="_blank" rel="noopener">WhatsApp Us</a>
+        <a class="btn-ghost" href="#contact" onclick="navigate('contact')">Request Quote</a>
+      </div>
+    </div>
+  </section>
+</div><!-- end page-nets -->
+
+
+<!-- ═══════════════ PAGE: HARDWARE SOLUTIONS ═══════════════ -->
+<div class="page" id="page-hardware">
+  <section class="page-hero">
+    <div class="page-hero-glow-right"></div>
+    <div class="max-w px" style="position:relative">
+      <p class="eyebrow light" style="margin-bottom:1rem">Hardware Supply</p>
+      <h1>Hardware Solutions for Industry &amp; Trade</h1>
+      <p>Industrial, commercial and general hardware stocked and ready — shackles, hooks, buckles, fasteners and everyday fittings, all from one trusted source.</p>
+    </div>
+  </section>
+
+  <section class="section-pad" style="background:var(--mist)">
+    <div class="max-w px">
+      <div class="section-header"><p class="eyebrow">The Range</p><h2>Three Hardware Categories</h2></div>
+      <div class="product-grid-3">
+        <div class="product-card"><div class="product-spec"><span class="spec-tag">Bulk Supply</span></div><h3 class="product-name">Industrial Hardware</h3><p class="product-desc">Shackles, hooks, buckles, rings and fittings supplied in bulk to factories, transporters and rigging contractors.</p><div class="product-uses"><div class="product-use">Shackles &amp; hooks</div><div class="product-use">Buckles &amp; rings</div><div class="product-use">Rigging fittings</div></div></div>
+        <div class="product-card"><div class="product-spec"><span class="spec-tag">Trade Supply</span></div><h3 class="product-name">Commercial Hardware</h3><p class="product-desc">A reliable range of commercial-grade hardware for shops, contractors, and recurring trade requirements.</p><div class="product-uses"><div class="product-use">Fasteners</div><div class="product-use">Fittings</div><div class="product-use">Trade essentials</div></div></div>
+        <div class="product-card"><div class="product-spec"><span class="spec-tag">Everyday Stock</span></div><h3 class="product-name">General Hardware Supply</h3><p class="product-desc">The everyday hardware stock our customers have relied on since 1970 — sourced, stocked, and always on hand.</p><div class="product-uses"><div class="product-use">Everyday tools</div><div class="product-use">Maintenance supplies</div><div class="product-use">Walk-in requirements</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad cta-section">
+    <div class="max-w px">
+      <h2>One Supplier for All Your Hardware Needs</h2>
+      <p>One phone call, one invoice, no delays. Tell us what you need and we'll have it ready.</p>
+      <div class="btn-group">
+        <a class="btn-sky" href="https://wa.me/919977776724" target="_blank" rel="noopener">WhatsApp Us</a>
+        <a class="btn-ghost" href="#contact" onclick="navigate('contact')">Request Quote</a>
+      </div>
+    </div>
+  </section>
+</div><!-- end page-hardware -->
+
+
+<!-- ═══════════════ PAGE: GALLERY ═══════════════ -->
+<div class="page" id="page-gallery">
+  <section class="page-hero centered">
+    <div class="page-hero-glow-center"></div>
+    <div class="max-w px" style="position:relative">
+      <p class="eyebrow light" style="margin-bottom:1rem">Gallery</p>
+      <h1>Our Store &amp; Products</h1>
+      <p style="max-width:30rem;margin:auto">Five decades of supplying Central India from one address in Dewas' Raja Ram Patel Market.</p>
+    </div>
+  </section>
+
+  <section class="section-pad" style="background:var(--mist)">
+    <div class="max-w px">
+      <div class="gallery-grid">
+        <div class="gallery-item" style="grid-column:span 2;aspect-ratio:2/1">
+          <div style="width:100%;height:280px;background:linear-gradient(135deg,#0D47A1,#0A1929);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1.25rem;padding:2rem;text-align:center">
+            <svg width="60" height="60" viewBox="0 0 600 600" fill="none"><g stroke="#4FC3F7" stroke-width="12" fill="none"><circle cx="300" cy="300" r="60"/><circle cx="300" cy="300" r="110"/><circle cx="300" cy="300" r="160"/></g><circle cx="300" cy="300" r="35" fill="#4FC3F7"/></svg>
+            <p style="font-family:'Bebas Neue',sans-serif;font-size:1.25rem;color:#fff;letter-spacing:.05em">STANDARD ROPE &amp; HARDWARE STOREFRONT</p>
+            <p style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:rgba(79,195,247,.75);letter-spacing:.18em">1 RAJA RAM PATEL MARKET · DEWAS, M.P.</p>
+          </div>
+        </div>
+        <div class="gallery-item"><div class="gallery-placeholder" style="height:200px">Rope Stock</div></div>
+        <div class="gallery-item"><div class="gallery-placeholder" style="height:200px">Net Supply</div></div>
+        <div class="gallery-item"><div class="gallery-placeholder" style="height:200px">Hardware</div></div>
+        <div class="gallery-item"><div class="gallery-placeholder" style="height:200px">Bulk Orders</div></div>
+        <div class="gallery-item"><div class="gallery-placeholder" style="height:200px">Delivery</div></div>
+        <div class="gallery-item"><div class="gallery-placeholder" style="height:200px">Storage</div></div>
+      </div>
+      <p style="text-align:center;margin-top:2rem;color:rgba(10,25,41,.45);font-size:.875rem">WhatsApp us for product photos and stock availability: <a href="https://wa.me/919977776724" style="color:var(--deep);font-weight:600" target="_blank">+91 99777 76724</a></p>
+    </div>
+  </section>
+</div><!-- end page-gallery -->
+
+
+<!-- ═══════════════ PAGE: REVIEWS ═══════════════ -->
+<div class="page" id="page-reviews">
+  <section class="page-hero centered" style="background:linear-gradient(180deg,var(--deep900),#0f2444)">
+    <div class="page-hero-glow-center"></div>
+    <div class="max-w px" style="position:relative">
+      <p class="eyebrow light" style="margin-bottom:1rem">Reviews</p>
+      <h1>Trusted by Businesses Across Central India</h1>
+      <div class="rating-row">
+        <svg class="star" viewBox="0 0 24 24" width="22" height="22"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg class="star" viewBox="0 0 24 24" width="22" height="22"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg class="star" viewBox="0 0 24 24" width="22" height="22"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg class="star" viewBox="0 0 24 24" width="22" height="22"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg class="star" viewBox="0 0 24 24" width="22" height="22"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+      <p style="color:rgba(255,255,255,.5);margin-top:.75rem;font-size:.875rem">Built on five decades of consistent service, not just recent reviews.</p>
+    </div>
+  </section>
+
+  <section class="section-pad" style="background:var(--mist)">
+    <div class="max-w px">
+      <div class="review-grid">
+        <div class="review-card"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><p class="review-text">"We've sourced our lashing rope from Standard Rope for over 8 years. Quality has never once been inconsistent."</p><div class="reviewer"><div class="reviewer-avatar">R</div><div><p class="reviewer-name">Rajesh Patidar</p><p class="reviewer-role">Transport Fleet Owner, Indore</p></div></div></div>
+        <div class="review-card"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><p class="review-text">"Their shade nets held up through three full summers. Genuinely durable, and they always have stock ready."</p><div class="reviewer"><div class="reviewer-avatar">S</div><div><p class="reviewer-name">Sunita Agro Farms</p><p class="reviewer-role">Agricultural Supplier, Dewas</p></div></div></div>
+        <div class="review-card"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><p class="review-text">"Bulk orders for scaffolding rope are handled fast, and Aziz bhai personally checks every order before dispatch."</p><div class="reviewer"><div class="reviewer-avatar">V</div><div><p class="reviewer-name">Vikram Construction Co.</p><p class="reviewer-role">Site Contractor, Ujjain</p></div></div></div>
+        <div class="review-card"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><p class="review-text">"Fifty years in business shows. They know exactly which rope grade suits which load — saved us from a wrong order twice."</p><div class="reviewer"><div class="reviewer-avatar">M</div><div><p class="reviewer-name">Mahesh Warehousing</p><p class="reviewer-role">Logistics Manager, Pithampur</p></div></div></div>
+        <div class="review-card"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><p class="review-text">"Soft-hand animal rope that doesn't chafe, and fair pricing every time. A trusted name in this region."</p><div class="reviewer"><div class="reviewer-avatar">G</div><div><p class="reviewer-name">Govind Dairy &amp; Farms</p><p class="reviewer-role">Livestock Owner, Ratlam</p></div></div></div>
+        <div class="review-card"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><p class="review-text">"Their hardware stock covers nearly everything we need for our unit. One supplier, one phone call, no delays."</p><div class="reviewer"><div class="reviewer-avatar">O</div><div><p class="reviewer-name">Om Steel Traders</p><p class="reviewer-role">Industrial Buyer, Bhopal</p></div></div></div>
+      </div>
+    </div>
+  </section>
+</div><!-- end page-reviews -->
+
+
+<!-- ═══════════════ PAGE: CONTACT ═══════════════ -->
+<div class="page" id="page-contact">
+  <section style="padding-top:10rem;padding-bottom:6rem;background:#fff">
+    <div class="max-w px">
+      <div class="section-header" style="margin-bottom:3.5rem">
+        <p class="eyebrow">Contact</p>
+        <h2>Let's Talk About Your Requirement</h2>
+        <p>Call, WhatsApp, or send an inquiry below — Aziz Ur Rahman Khan personally handles every order.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="info-card">
+            <div class="info-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div><p class="info-label">Address</p><p class="info-val">1 Raja Ram Patel Market<br>J.P. Marg, Dewas<br>Madhya Pradesh 455001</p></div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.45 2 2 0 0 1 3.57 1.27h3a2 2 0 0 1 2 1.72c.127.96.36 1.902.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.81a16 16 0 0 0 6 6l.81-.81a2 2 0 0 1 2.11-.45c.908.34 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg></div>
+            <div><p class="info-label">Phone</p><p class="info-val"><a href="tel:+919977776724">+91 99777 76724</a></p></div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+            <div><p class="info-label">WhatsApp</p><p class="info-val"><a href="https://wa.me/919977776724" target="_blank" rel="noopener">+91 99777 76724</a></p></div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div><p class="info-label">Hours</p><p class="info-val">Mon – Sat, 10:00 AM – 8:00 PM</p></div>
+          </div>
+          <div class="map-embed">
+            <iframe title="Standard Rope & Hardware location" src="https://www.google.com/maps?q=Raja+Ram+Patel+Market+Dewas+Madhya+Pradesh&output=embed" loading="lazy"></iframe>
+          </div>
+        </div>
+
+        <div class="contact-form-wrap">
+          <h2>Send an Inquiry</h2>
+          <div id="form-success" class="form-success">✓ Message sent! We'll get back to you shortly.</div>
+          <div class="form-row">
+            <div class="form-group"><label for="f-name">Your Name</label><input id="f-name" type="text" placeholder="Rajesh Kumar" /></div>
+            <div class="form-group"><label for="f-phone">Phone / WhatsApp</label><input id="f-phone" type="tel" placeholder="+91 98765 43210" /></div>
+          </div>
+          <div class="form-group"><label for="f-business">Business / Organisation</label><input id="f-business" type="text" placeholder="Your company name" /></div>
+          <div class="form-group">
+            <label for="f-category">Product Category</label>
+            <select id="f-category">
+              <option value="">Select a category</option>
+              <option>Rope Solutions</option>
+              <option>Net Solutions</option>
+              <option>Hardware Solutions</option>
+              <option>Multiple / Not Sure</option>
+            </select>
+          </div>
+          <div class="form-group"><label for="f-message">Requirement Details</label><textarea id="f-message" placeholder="Describe what you need — product type, quantity, application..."></textarea></div>
+          <button class="btn-submit" onclick="submitForm()">Send Inquiry</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- end page-contact -->
+
+
+<!-- ═══════════════ FOOTER (always visible) ═══════════════ -->
+<footer id="site-footer">
+  <div class="rope-thread" style="opacity:.35"><svg viewBox="0 0 1200 28" preserveAspectRatio="none" width="100%" height="100%"><defs><linearGradient id="rff" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#4FC3F7" stop-opacity="0"/><stop offset="15%" stop-color="#4FC3F7" stop-opacity=".5"/><stop offset="85%" stop-color="#4FC3F7" stop-opacity=".5"/><stop offset="100%" stop-color="#4FC3F7" stop-opacity="0"/></linearGradient></defs><path d="M0,14 Q30,4 60,14 T120,14 T180,14 T240,14 T300,14 T360,14 T420,14 T480,14 T540,14 T600,14 T660,14 T720,14 T780,14 T840,14 T900,14 T960,14 T1020,14 T1080,14 T1140,14 T1200,14" fill="none" stroke="url(#rff)" stroke-width="2"/></svg></div>
+  <div class="max-w px">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <svg width="36" height="36" viewBox="0 0 44 44" fill="none"><rect width="44" height="44" rx="8" fill="#0D47A1"/><g fill="none" stroke="#4FC3F7" stroke-width="2"><circle cx="22" cy="22" r="6"/><circle cx="22" cy="22" r="10"/><circle cx="22" cy="22" r="14"/></g><circle cx="22" cy="22" r="3" fill="#4FC3F7"/></svg>
+          <p>STANDARD ROPE</p>
+        </div>
+        <p class="footer-tagline">Trusted Rope, Net &amp; Hardware Solutions Since 1970</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Navigate</p>
+        <nav class="footer-nav">
+          <a href="#home" onclick="navigate('home')">Home</a>
+          <a href="#about" onclick="navigate('about')">About</a>
+          <a href="#rope" onclick="navigate('rope')">Rope Solutions</a>
+          <a href="#nets" onclick="navigate('nets')">Net Solutions</a>
+          <a href="#hardware" onclick="navigate('hardware')">Hardware Solutions</a>
+          <a href="#gallery" onclick="navigate('gallery')">Gallery</a>
+          <a href="#reviews" onclick="navigate('reviews')">Reviews</a>
+          <a href="#contact" onclick="navigate('contact')">Contact</a>
+        </nav>
+      </div>
+      <div>
+        <p class="footer-col-title">Reach Us</p>
+        <div class="footer-contact">
+          <div class="footer-contact-row"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>1 Raja Ram Patel Market, J.P. Marg, Dewas, Madhya Pradesh 455001</div>
+          <div class="footer-contact-row"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.45 2 2 0 0 1 3.57 1.27h3a2 2 0 0 1 2 1.72c.127.96.36 1.902.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.81a16 16 0 0 0 6 6l.81-.81a2 2 0 0 1 2.11-.45c.908.34 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg><a href="tel:+919977776724">+91 99777 76724</a></div>
+          <div class="footer-contact-row"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><a href="https://wa.me/919977776724" target="_blank" rel="noopener">WhatsApp Us</a></div>
+        </div>
+      </div>
+      <div>
+        <p class="footer-col-title">Since</p>
+        <p class="footer-year">1970</p>
+        <p class="footer-year-sub">Three generations of rope, net &amp; hardware expertise in Dewas, Madhya Pradesh.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom max-w px">
+    © <span id="year"></span> Standard Rope &amp; Hardware. Proprietor Aziz Ur Rahman Khan. All rights reserved.
+  </div>
+</footer>
+
+<script>
+// ─── Year ───
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// ─── Page map ───
+const pageMap = {
+  home:'page-home',
+  about:'page-about',
+  rope:'page-rope',
+  nets:'page-nets',
+  hardware:'page-hardware',
+  gallery:'page-gallery',
+  reviews:'page-reviews',
+  contact:'page-contact'
+};
+
+const navMap = {
+  home:0,about:1,rope:2,nets:3,hardware:4,gallery:5,reviews:6,contact:7
+};
+
+let currentPage = 'home';
+
+function navigate(page) {
+  if (!pageMap[page]) page = 'home';
+  // Hide all
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  // Show target
+  document.getElementById(pageMap[page]).classList.add('active');
+  // Update nav links
+  const links = document.querySelectorAll('.nav-link');
+  links.forEach((l,i) => {
+    l.classList.toggle('active', i === navMap[page]);
+  });
+  currentPage = page;
+  window.scrollTo({top:0,behavior:'instant'});
+  // Trigger counter animation on home
+  if (page === 'home') {
+    setTimeout(runCounters, 300);
+  }
+  // Trigger fade-ins
+  setTimeout(triggerFadeIns, 100);
+}
+
+// ─── Navbar scroll ───
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 24);
+});
+
+// ─── Mobile menu ───
+let menuOpen = false;
+function toggleMenu() {
+  menuOpen = !menuOpen;
+  document.getElementById('mobile-menu').classList.toggle('open', menuOpen);
+  document.getElementById('ham-icon').style.display = menuOpen ? 'none' : 'block';
+  document.getElementById('close-icon').style.display = menuOpen ? 'block' : 'none';
+}
+
+// ─── Animated counters ───
+let countersRun = false;
+function runCounters() {
+  if (currentPage !== 'home') return;
+  const els = document.querySelectorAll('[data-count]');
+  els.forEach(el => {
+    const target = parseInt(el.getAttribute('data-count'));
+    const suffix = el.getAttribute('data-suffix');
+    const duration = 1400;
+    const start = performance.now();
+    function step(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(eased * target);
+      el.textContent = current.toLocaleString('en-IN') + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+}
+
+// ─── Intersection observer for fade-ins ───
+function triggerFadeIns() {
+  const fades = document.querySelectorAll('.fade-in:not(.visible)');
+  if (!fades.length) return;
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, {rootMargin:'-30px'});
+  fades.forEach(f => obs.observe(f));
+}
+
+// ─── Contact form ───
+function submitForm() {
+  const name = document.getElementById('f-name').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+  document.getElementById('form-success').style.display = 'block';
+  ['f-name','f-phone','f-business','f-message'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('f-category').value = '';
+  setTimeout(() => { document.getElementById('form-success').style.display = 'none'; }, 5000);
+}
+
+// ─── Hash routing ───
+function routeFromHash() {
+  const hash = location.hash.replace('#','') || 'home';
+  const page = pageMap[hash] ? hash : 'home';
+  navigate(page);
+}
+window.addEventListener('hashchange', routeFromHash);
+
+// ─── Init ───
+routeFromHash();
+setTimeout(runCounters, 600);
+setTimeout(triggerFadeIns, 300);
+</script>
+</body>
+</html>
